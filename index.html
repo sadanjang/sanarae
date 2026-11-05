@@ -1,0 +1,821 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#ffffff" />
+  <meta name="robots" content="noindex, nofollow, noarchive" />
+  <meta name="description" content="성당 학사님 핸드폰 바꿔드리기 프로젝트. 함께할수록 1인당 부담은 줄어듭니다." />
+  <title>노학사 핸드폰 구하기 | sanarae</title>
+  <style>
+    :root{
+      --bg:#f7f7f6;
+      --paper:#ffffff;
+      --line:#ece9e3;
+      --text:#292622;
+      --muted:#6d675f;
+      --accent:#ff5c72;
+      --accent-soft:#fff1f4;
+      --sub:#1f8f7a;
+      --shadow:0 10px 30px rgba(0,0,0,.06);
+      --radius:20px;
+      --radius-sm:14px;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;font-family:Pretendard,"Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;background:var(--bg);color:var(--text)}
+    a{text-decoration:none;color:inherit}
+    button,input{font:inherit}
+    img{display:block;max-width:100%}
+    .page{min-height:100vh}
+    .container{max-width:1160px;margin:0 auto;padding:0 18px}
+    .header{position:sticky;top:0;z-index:30;background:rgba(247,247,246,.86);backdrop-filter:blur(14px);border-bottom:1px solid rgba(236,233,227,.85)}
+    .header-inner{height:72px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .brand{display:flex;align-items:center;gap:12px;font-weight:900;letter-spacing:-.03em}
+    .brand-mark{width:54px;height:54px;flex-shrink:0;border-radius:12px;background:transparent;display:grid;place-items:center;box-shadow:none;overflow:hidden}
+    .brand-mark img{display:block;width:100%;height:100%;object-fit:contain}
+    .brand-name{font-size:22px}
+    .brand-sub{font-size:12px;color:var(--muted);font-weight:700;margin-top:2px}
+    .header-actions{display:flex;align-items:center;gap:10px}
+    .pill{border:1px solid var(--line);background:#fff;border-radius:999px;padding:10px 14px;font-size:13px;font-weight:700;color:var(--muted)}
+    .hero{padding:34px 0 18px}
+    .hero-grid{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(320px,.86fr);gap:24px;align-items:start}
+    .gallery{background:var(--paper);border:1px solid var(--line);border-radius:28px;overflow:hidden;box-shadow:var(--shadow)}
+    .cover{position:relative;aspect-ratio:16/10;overflow:hidden}
+    .cover img{width:100%;height:100%;object-fit:cover;transition:opacity .16s ease}
+    .cover img.product-photo{object-fit:contain;background:#f7f7f7}
+    .gallery-nav{position:absolute;z-index:3;top:50%;transform:translateY(-50%);width:44px;height:44px;border:1px solid rgba(255,255,255,.55);border-radius:50%;background:rgba(22,24,27,.56);color:#fff;font-size:27px;font-weight:500;display:grid;place-items:center;cursor:pointer;backdrop-filter:blur(4px)}
+    .gallery-nav:hover{background:rgba(22,24,27,.80)}
+    .gallery-prev{left:13px}.gallery-next{right:13px}
+    .gallery-counter{position:absolute;right:14px;bottom:13px;z-index:2;color:#fff;background:rgba(0,0,0,.60);border-radius:30px;padding:6px 12px;font-weight:800;font-size:12px}
+    .gallery-bottom{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 12px;border-top:1px solid #f0ebe3;background:#fff}
+    .gallery-caption{color:#625e58;font-size:13px;font-weight:700;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .gallery-hint{font-size:12px;color:#938e88;white-space:nowrap}
+    .gallery-bottom-button{flex-shrink:0;padding:6px 9px;border-radius:9px;border:1px solid #eee9e2;background:#fff;color:#58514c;font-size:12px;font-weight:900;cursor:pointer}
+    .gallery-bottom-button:hover{background:#fff4f5}
+    .gallery-dots{display:flex;gap:7px;justify-content:center;padding:1px 0 10px;background:#fff}
+    .gallery-dot{width:8px;height:8px;border:0;border-radius:50%;padding:0;background:#ddd8d1;cursor:pointer}
+    .gallery-dot.active{background:#ff5c72;transform:scale(1.3)}
+    .cover-badge{position:absolute;left:20px;top:20px;background:rgba(255,255,255,.93);border-radius:999px;padding:9px 13px;font-weight:800;font-size:13px;box-shadow:var(--shadow)}
+    .thumbs{display:flex;gap:8px;padding:8px;background:#fff;overflow-x:auto;scrollbar-width:thin;scroll-snap-type:x proximity}
+    .thumb{flex:0 0 clamp(68px,13%,110px);border-radius:12px;overflow:hidden;aspect-ratio:1/1;border:2px solid transparent;padding:0;cursor:pointer;background:#f6f5f3;scroll-snap-align:start}
+    .thumb.active{border-color:var(--accent)}
+    .thumb:focus-visible,.gallery-nav:focus-visible,.gallery-dot:focus-visible{outline:3px solid #ffafbc;outline-offset:2px}
+    .thumb img{width:100%;height:100%;object-fit:cover}
+    .story-panel{background:var(--paper);border:1px solid var(--line);border-radius:28px;padding:28px;box-shadow:var(--shadow)}
+    .category{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-size:12px;font-weight:900;margin-bottom:14px}
+    h1{margin:0 0 12px;font-size:clamp(32px,4.6vw,48px);line-height:1.13;letter-spacing:-.05em}
+    .intro{margin:0;color:var(--muted);font-size:16px;line-height:1.72}
+    .em{color:var(--accent);font-weight:900}
+    .hero-cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+    .btn{appearance:none;border:0;cursor:pointer;border-radius:14px;padding:14px 18px;font-weight:900;letter-spacing:-.01em;transition:transform .15s ease,filter .15s ease, background .15s ease}
+    .btn:hover{transform:translateY(-1px);filter:brightness(1.01)}
+    .btn-primary{background:var(--accent);color:#fff;box-shadow:0 12px 24px rgba(255,92,114,.22)}
+    .btn-secondary{background:#fff;border:1px solid var(--line);color:var(--text)}
+
+    .body-grid{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:24px;padding:6px 0 48px}
+    .section{background:var(--paper);border:1px solid var(--line);border-radius:24px;padding:28px;box-shadow:var(--shadow);margin-bottom:20px}
+    .section h2{margin:0 0 14px;font-size:25px;letter-spacing:-.03em}
+    .section p{margin:0 0 14px;line-height:1.85;color:#403a34}
+    .quote{background:#faf7f3;border:1px dashed #eadfcb;border-radius:18px;padding:18px 18px 16px;color:#5e5448;font-size:15px;line-height:1.75}
+    .chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+    .ghost-btn{background:#fff;border:1px solid var(--line);color:#5e584f;padding:12px 14px;border-radius:999px;font-size:14px;font-weight:800;cursor:pointer}
+    .ghost-btn:hover{background:#faf7f3}
+    .story-list{display:grid;gap:12px;margin-top:16px}
+    .story-item{display:flex;gap:12px;padding:16px;border-radius:18px;background:#fbfaf8;border:1px solid #f0ebe3}
+    .story-icon{width:42px;height:42px;border-radius:14px;background:#fff;display:grid;place-items:center;font-size:20px;border:1px solid #efe7dc;flex:0 0 auto}
+    .story-item strong{display:block;font-size:15px;margin-bottom:4px}
+    .story-item span{display:block;color:var(--muted);line-height:1.6;font-size:14px}
+    .disclaimer{font-size:13px;color:var(--muted)}
+
+    .fund-card{position:sticky;top:94px;background:var(--paper);border:1px solid var(--line);border-radius:24px;padding:24px;box-shadow:var(--shadow)}
+    .progress-label{font-size:13px;color:var(--muted);font-weight:800}
+    .amount{font-size:30px;font-weight:900;letter-spacing:-.04em;margin:6px 0 2px}
+    .subline{font-size:13px;color:var(--muted);line-height:1.7}
+    .progress{margin:16px 0 8px;height:10px;background:#f1eeea;border-radius:999px;overflow:hidden}
+    .progress-bar{height:100%;background:linear-gradient(90deg,#ff8c9c,#ff5c72);width:0%}
+    .stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}
+    .stat{padding:16px;border-radius:18px;background:#faf7f3;border:1px solid #efe7dc}
+    .stat-k{font-size:12px;color:var(--muted);font-weight:800;margin-bottom:6px}
+    .stat-v{font-size:22px;font-weight:900;letter-spacing:-.04em}
+    .stat-v.green{color:var(--sub)}
+    .support-box{margin-top:16px;padding:16px;border-radius:18px;background:#fff6e5;border:1px solid #f5e2b1;color:#664d1e;font-size:14px;line-height:1.7}
+    .support-box strong{display:block;margin-bottom:4px;color:#5b4310}
+    .meta-list{display:grid;gap:10px;margin:18px 0}
+    .meta-item{display:flex;justify-content:space-between;gap:10px;font-size:14px;color:#4d473f}
+    .meta-item b{font-size:15px}
+    .notice{margin-top:14px;padding:12px 13px;border-radius:14px;background:#f6f8fb;border:1px solid #e8edf5;font-size:13px;line-height:1.65;color:#5f6774}
+    .my-card{display:none;margin-top:14px;padding:14px;border-radius:16px;background:#f2faf8;border:1px solid #cfe9e2}
+    .my-card.show{display:block}
+    .my-card strong{display:block;margin-bottom:4px}
+    .my-actions{display:flex;gap:8px;margin-top:10px}
+    .btn-cancel{background:#fff;border:1px solid #f1c1c9;color:#b23c50}
+    .btn-copy{width:100%;margin-top:10px;background:#fff;border:1px solid var(--line)}
+    .member-box{margin-top:20px;border-top:1px solid var(--line);padding-top:18px}
+    .member-title{font-weight:900;font-size:16px;margin-bottom:10px}
+    .member-list{display:grid;gap:10px;max-height:320px;overflow:auto;padding-right:4px}
+    .member{display:flex;align-items:center;gap:12px;padding:12px;border-radius:16px;background:#fbfaf8;border:1px solid #f0ebe3}
+    .avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#ffd1d8,#ffe8b0);display:grid;place-items:center;font-weight:900;color:#6f3945;flex:0 0 auto}
+    .member-body{min-width:0;flex:1}
+    .member-name{font-weight:800;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .member-meta{font-size:12px;color:var(--muted);margin-top:3px}
+    .tag{font-size:11px;border-radius:999px;padding:6px 9px;background:#fff;border:1px solid #efe7dc;color:#7d7265;font-weight:900}
+    .empty{padding:18px;border-radius:16px;background:#fbfaf8;border:1px dashed #eadfd3;color:var(--muted);font-size:14px;text-align:center}
+
+    .modal, .toast-wrap{position:fixed;inset:0;z-index:60;display:none}
+    .modal.open{display:grid;place-items:center;background:rgba(0,0,0,.38);padding:18px}
+    .modal-card{width:min(480px,100%);background:#fff;border-radius:24px;padding:26px;box-shadow:0 28px 60px rgba(0,0,0,.24)}
+    .modal-card h3{margin:0 0 10px;font-size:24px;letter-spacing:-.03em}
+    .modal-card p{margin:0 0 18px;color:var(--muted);line-height:1.7}
+    .field{display:grid;gap:8px}
+    .label{font-size:13px;font-weight:800;color:#5a554e}
+    .input{height:52px;border-radius:14px;border:1px solid #ddd5ca;padding:0 15px;font-size:15px;outline:none}
+    .input:focus{border-color:#ff9aa9;box-shadow:0 0 0 4px rgba(255,92,114,.09)}
+    .modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:18px}
+    .modal-actions .btn{padding:13px 16px}
+
+    .toast-wrap.show{display:block;pointer-events:none}
+    .toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);min-width:min(520px,calc(100vw - 24px));max-width:min(520px,calc(100vw - 24px));background:#26221f;color:#fff;padding:16px 18px;border-radius:18px;box-shadow:0 16px 34px rgba(0,0,0,.22);font-size:14px;line-height:1.65;opacity:0;transition:all .2s ease}
+    .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+    @media (max-width: 980px){
+      .hero-grid,.body-grid{grid-template-columns:1fr}
+      .fund-card{position:static}
+    }
+    @media (max-width: 640px){
+      .header-inner{height:auto;padding:12px 0;align-items:flex-start;flex-direction:column}
+      .thumbs{gap:6px}
+      .gallery-nav{width:36px;height:36px;font-size:22px}
+      .gallery-prev{left:8px}.gallery-next{right:8px}
+      .gallery-hint{display:none}
+      .cover-badge{max-width:70%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+      .story-panel,.section,.fund-card{padding:20px}
+      .stats{grid-template-columns:1fr}
+      .hero-cta,.modal-actions,.my-actions{flex-direction:column}
+      .btn,.ghost-btn{width:100%}
+      .cover-badge{left:12px;top:12px;font-size:12px}
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="header">
+      <div class="container header-inner">
+        <div class="brand">
+          <div class="brand-mark"><img src="images/sanarae_logo.png" alt="천주교 상촌성당 청년회 사나래 로고" /></div>
+          <div>
+            <div class="brand-name">sanarae</div>
+            <div class="brand-sub">마음을 모아, 산 아래에서</div>
+          </div>
+        </div>
+        <div class="header-actions">
+          <div class="pill" id="storageMode">데모 모드</div>
+          <button class="pill" type="button" id="shareTopButton">링크 공유</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="hero">
+        <div class="hero-grid">
+          <div class="gallery">
+            <div class="cover" id="galleryCover" tabindex="0" aria-label="프로젝트 사진 갤러리. 좌우 화살표 키로 사진을 이동할 수 있습니다.">
+              <img id="mainPhoto" src="images/01_s26_cake.jpg" alt="S26 핸드폰 케이크 축하 사진" />
+              <div class="cover-badge">성당 마음모으기 프로젝트 · sanarae</div>
+              <button class="gallery-nav gallery-prev" id="previousPhotoButton" type="button" aria-label="이전 사진">‹</button>
+              <button class="gallery-nav gallery-next" id="nextPhotoButton" type="button" aria-label="다음 사진">›</button>
+              <div class="gallery-counter" id="galleryCounter" aria-live="polite">1 / 7</div>
+            </div>
+            <div class="gallery-bottom"><button class="gallery-bottom-button" id="photoPrevBottom" type="button">← 이전</button><span class="gallery-caption" id="galleryCaption">S26 핸드폰 케이크 축하 사진</span><button class="gallery-bottom-button" id="photoNextBottom" type="button">다음 →</button></div>
+            <div class="thumbs" id="photoThumbnails">
+              <button class="thumb active" type="button" data-photo-index="0" aria-label="1번 사진 보기" aria-pressed="true"><img src="images/01_s26_cake.jpg" alt="S26 핸드폰 케이크" /></button>
+              <button class="thumb" type="button" data-photo-index="1" aria-label="2번 사진 보기" aria-pressed="false"><img src="images/07_galaxy_s26_product.png" alt="갤럭시 S26 자급제 상품 안내 이미지" /></button>
+              <button class="thumb" type="button" data-photo-index="2" aria-label="3번 사진 보기" aria-pressed="false"><img src="images/02_baseball.jpg" alt="야구장 단체사진" /></button>
+              <button class="thumb" type="button" data-photo-index="3" aria-label="4번 사진 보기" aria-pressed="false"><img src="images/03_funny.jpg" alt="즐거운 성당 모임" /></button>
+              <button class="thumb" type="button" data-photo-index="4" aria-label="5번 사진 보기" aria-pressed="false"><img src="images/04_rest.jpg" alt="휴식 중인 모습" /></button>
+              <button class="thumb" type="button" data-photo-index="5" aria-label="6번 사진 보기" aria-pressed="false"><img src="images/05_side.jpg" alt="모임 속 모습" /></button>
+              <button class="thumb" type="button" data-photo-index="6" aria-label="7번 사진 보기" aria-pressed="false"><img src="images/06_dinner.jpg" alt="저녁 모임 사진" /></button>
+            </div>
+            <div class="gallery-dots" id="galleryDots" aria-label="사진 선택"></div>
+          </div>
+
+          <div class="story-panel">
+            <div class="category">🙏 성당 · 공동마음 · 핸드폰 긴급교체</div>
+            <h1>노학사 핸드폰 구하기</h1>
+            <p class="intro">
+              성당 곳곳의 추억을 누구보다 정성껏 남기시는 <span class="em">노병찬 학사님</span>.<br>
+              그런데 요즘은 핸드폰이 너무 버벅여서, <span class="em">사진 한 장 열리는 데에도 인내의 미덕</span>이 필요합니다.<br><br>
+              작은 정성을 모아 학사님께 더 쾌적한 일상을 선물해 드리려 합니다. 함께할수록 1인당 부담은 가벼워지고,
+              마음은 더 풍성해집니다.
+            </p>
+            <div class="hero-cta">
+              <button class="btn btn-primary" type="button" id="openJoinButton">후원하기</button>
+              <button class="btn btn-secondary random-action" type="button">프로젝트 둘러보기</button>
+              <button class="btn btn-secondary random-action" type="button">응원 한마디 보기</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="body-grid">
+        <div>
+          <article class="section">
+            <h2>왜 지금, 왜 핸드폰일까요?</h2>
+            <p>
+              공동체의 순간들은 늘 갑자기 옵니다. 미사 후 단체사진, 행사 현장 기록, 반가운 안부 사진까지요.
+              그런데 학사님 핸드폰은 이제 그 모든 순간 앞에서 조금씩 숨이 찹니다.
+            </p>
+            <div class="quote" id="randomQuote">
+              노병찬 학사님 폰이 렉걸려서 사진도 못 보는데… 정말 안 바꿔드려도 괜찮을까요?
+            </div>
+            <div class="chips">
+              <button class="ghost-btn random-action" type="button">자세히 보기</button>
+              <button class="ghost-btn random-action" type="button">기도로 응원하기</button>
+              <button class="ghost-btn random-action" type="button">학사님 상황 더 보기</button>
+              <button class="ghost-btn random-action" type="button">이야기 더 듣기</button>
+            </div>
+          </article>
+
+          <article class="section">
+            <h2>이 프로젝트의 진심</h2>
+            <div class="story-list">
+              <div class="story-item">
+                <div class="story-icon">📷</div>
+                <div>
+                  <strong>사진 한 장도 소중하니까요</strong>
+                  <span>성당의 추억을 남기는 일은 생각보다 자주, 그리고 오래 이어집니다. 더 이상 로딩 원이 우리의 신앙심을 시험하지 않기를 바랍니다.</span>
+                </div>
+              </div>
+              <div class="story-item">
+                <div class="story-icon">🤝</div>
+                <div>
+                  <strong>함께 모으면 부담은 줄어듭니다</strong>
+                  <span>한 사람이 전부 감당하기보다, 여러 사람이 가볍게 마음을 보태면 더 따뜻하고 즐거운 프로젝트가 됩니다.</span>
+                </div>
+              </div>
+              <div class="story-item">
+                <div class="story-icon">💛</div>
+                <div>
+                  <strong>유쾌하지만 진심입니다</strong>
+                  <span>이 페이지는 재미있게 만들었지만, 학사님을 아끼는 마음만큼은 진심입니다. 작은 센스와 큰 정성을 함께 담았습니다.</span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="section">
+            <h2>안내 사항</h2>
+            <p>
+              이 페이지는 <strong>재미와 마음 모으기</strong>를 위한 개인 프로젝트 형식으로 제작되었습니다.
+              실제 금전 정산 방식은 별도로 정하셔도 되고, 단순히 참여자 수를 세는 용도로만 사용하셔도 됩니다.
+            </p>
+            <p class="disclaimer">
+              ※ 이 사이트는 가상 참여 현황을 보여 주는 페이지이며 실제 결제 기능이 없습니다. 사이트 주소와 사진, 참여자 이름은 공개 배포 시 제3자가 볼 수 있으므로 공유에 주의해 주세요.
+            </p>
+          </article>
+        </div>
+
+        <aside>
+          <div class="fund-card">
+            <div class="progress-label">핸드폰 목표 가격 (가상)</div>
+            <div class="amount" id="goalAmount">1,141,302원</div>
+            <div class="subline">노병찬 학사님을 위한 갤럭시 S26 자급제 참고 가격입니다.</div>
+            <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
+            <div class="subline" id="progressText">현재 1명이 마음을 보탰습니다. (참여 지표: 10명 기준)</div>
+
+            <div class="stats">
+              <div class="stat">
+                <div class="stat-k">현재 참여 인원</div>
+                <div class="stat-v" id="memberCount">1명</div>
+              </div>
+              <div class="stat">
+                <div class="stat-k">1인당 예상 부담</div>
+                <div class="stat-v green" id="shareAmount">1,141,302원</div>
+              </div>
+            </div>
+
+            <div class="support-box">
+              <strong>지금의 한마디</strong>
+              <span id="supportMessage">한 분만 더 함께해 주시면 부담은 벌써 절반으로 줄어듭니다.</span>
+            </div>
+
+            <div class="meta-list">
+              <div class="meta-item"><span>목표 기종</span><b>갤럭시 S26 자급제</b></div>
+              <div class="meta-item"><span>프로젝트 제목</span><b>노학사 핸드폰 구하기</b></div>
+              <div class="meta-item"><span>플랫폼</span><b>sanarae</b></div>
+              <div class="meta-item"><span>후원 방식</span><b>함께 참여 · 인원수 기반</b></div>
+            </div>
+
+            <button class="btn btn-primary" type="button" id="cardJoinButton" style="width:100%">나도 참여하기</button>
+            <button class="btn btn-copy" type="button" id="shareButton">링크 복사하기</button>
+
+            <div class="notice" id="syncNotice">현재는 데모 모드입니다. 이 브라우저에서만 저장됩니다.</div>
+
+            <div class="my-card" id="myCard">
+              <strong id="myCardTitle">현재 참여 중입니다</strong>
+              <div id="myCardDesc">내 이름이 등록되어 있습니다.</div>
+              <div class="my-actions">
+                <button class="btn btn-secondary" type="button" id="changeMessageButton">센스 멘트 바꾸기</button>
+                <button class="btn btn-cancel" type="button" id="cancelButton">참여 취소</button>
+              </div>
+            </div>
+
+            <div class="member-box">
+              <div class="member-title">함께한 분들</div>
+              <div class="member-list" id="memberList"></div>
+            </div>
+          </div>
+        </aside>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal" id="joinModal" aria-hidden="true">
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="joinTitle">
+      <h3 id="joinTitle">나도 참여하기</h3>
+      <p>이름 또는 별명을 적어 주세요. 함께하는 사람이 늘어날수록 1인당 예상 부담액은 자동으로 줄어듭니다.</p>
+      <form id="joinForm">
+        <div class="field">
+          <label class="label" for="nameInput">이름 / 별명</label>
+          <input class="input" id="nameInput" maxlength="20" placeholder="예: 홍길동, 청년회 1번" autocomplete="nickname" />
+        </div>
+        <div class="modal-actions">
+          <button class="btn btn-secondary" type="button" id="closeModalButton">닫기</button>
+          <button class="btn btn-primary" type="submit" id="joinButton">참여하기</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal" id="cancelModal" aria-hidden="true">
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="cancelTitle">
+      <h3 id="cancelTitle">참여를 취소하시겠습니까?</h3>
+      <p id="cancelDescription">취소하면 인원수와 1인당 예상 부담액이 다시 계산됩니다.</p>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" type="button" id="keepButton">그대로 둘래요</button>
+        <button class="btn btn-cancel" type="button" id="confirmCancelButton">참여 취소하기</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-wrap" id="toastWrap"><div class="toast" id="toast"></div></div>
+
+  <script type="module">
+    // ===== 7장 사진 갤러리 (로고는 별도) =====
+    const PHOTOS = [
+      {
+            "src": "images/01_s26_cake.jpg",
+            "caption": "S26 핸드폰 케이크 축하 사진"
+      },
+      {
+            "src": "images/07_galaxy_s26_product.png",
+            "caption": "갤럭시 S26 자급제 · 참고 가격 1,141,302원"
+      },
+      {
+            "src": "images/02_baseball.jpg",
+            "caption": "성당 공동체 야구장 단체사진"
+      },
+      {
+            "src": "images/03_funny.jpg",
+            "caption": "성당 모임에서 웃는 모습"
+      },
+      {
+            "src": "images/04_rest.jpg",
+            "caption": "의자에 앉아 쉬는 모습"
+      },
+      {
+            "src": "images/05_side.jpg",
+            "caption": "모임 중 옆모습"
+      },
+      {
+            "src": "images/06_dinner.jpg",
+            "caption": "함께한 저녁 모임"
+      }
+];
+    let activePhotoIndex = 0;
+    function showPhoto(index) {
+      activePhotoIndex = (index + PHOTOS.length) % PHOTOS.length;
+      const current = PHOTOS[activePhotoIndex];
+      const main = document.getElementById('mainPhoto');
+      main.src = current.src;
+      main.alt = current.caption;
+      main.classList.toggle('product-photo', activePhotoIndex === 1);
+      document.getElementById('galleryCaption').textContent = current.caption;
+      document.getElementById('galleryCounter').textContent = `${activePhotoIndex + 1} / ${PHOTOS.length}`;
+      document.querySelectorAll('[data-photo-index]').forEach(button => {
+        const selected = Number(button.dataset.photoIndex) === activePhotoIndex;
+        button.classList.toggle('active', selected);
+        button.setAttribute('aria-pressed', String(selected));
+      });
+      document.querySelectorAll('.gallery-dot').forEach((dot,i) => dot.classList.toggle('active',i === activePhotoIndex));
+    }
+    function setupPhotoGallery() {
+      const dots = document.getElementById('galleryDots');
+      PHOTOS.forEach((_,i) => {
+        const b = document.createElement('button');
+        b.type = 'button'; b.className = 'gallery-dot';
+        b.setAttribute('aria-label', `${i+1}번 사진으로 이동`);
+        b.addEventListener('click', () => showPhoto(i));
+        dots.appendChild(b);
+      });
+      document.getElementById('previousPhotoButton').addEventListener('click', () => showPhoto(activePhotoIndex - 1));
+      document.getElementById('nextPhotoButton').addEventListener('click', () => showPhoto(activePhotoIndex + 1));
+      document.getElementById('photoPrevBottom').addEventListener('click', () => showPhoto(activePhotoIndex - 1));
+      document.getElementById('photoNextBottom').addEventListener('click', () => showPhoto(activePhotoIndex + 1));
+      document.querySelectorAll('[data-photo-index]').forEach(button => {
+        button.addEventListener('click', () => showPhoto(Number(button.dataset.photoIndex)));
+      });
+      const cover = document.getElementById('galleryCover');
+      cover.addEventListener('keydown', event => {
+        if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+          event.preventDefault(); showPhoto(activePhotoIndex + (event.key === 'ArrowLeft' ? -1 : 1));
+        }
+      });
+      let x0 = null;
+      cover.addEventListener('touchstart',e => {if (e.touches.length===1) x0=e.touches[0].clientX},{passive:true});
+      cover.addEventListener('touchend',e => {
+        if(x0 == null || !e.changedTouches.length) return;
+        const dx=e.changedTouches[0].clientX-x0;x0=null;
+        if(Math.abs(dx)>45)showPhoto(activePhotoIndex+(dx<0?1:-1));
+      },{passive:true});
+      showPhoto(0);
+    }
+    setupPhotoGallery();
+
+    const CONFIG = {
+      beneficiary: '노병찬 학사님',
+      goalWon: 1141302,
+      founderName: '주최자',
+      supabaseUrl: 'https://adrskmwbixrncjgzqbnb.supabase.co',
+      supabasePublishableKey: 'sb_publishable_utWsBhOGR2VXqPKUnPTfaw_0bgZRoKU'
+    };
+
+    const PLEAS = [
+      '노병찬 학사님 폰이 렉걸려서 사진도 못 보는데… 이쯤 되면 사랑의 교체가 필요하지 않을까요?',
+      '성당 단체사진을 열다가, 사진보다 로딩이 먼저 묵상에 들어갑니다. 이제는 새 폰이 필요합니다.',
+      '학사님 핸드폰은 지금 “주님 뜻대로…” 하며 멈춰 있는 듯합니다. 우리 손으로 속도를 되찾아 드려요.',
+      '미사 후 따끈한 사진을 바로 보고 싶은데, 학사님 폰은 아직 지난주 사진도 다 못 열었습니다.',
+      '공동체의 추억은 빠르게 쌓이는데, 핸드폰은 천천히만 따라옵니다. 이제 우리가 힘을 모을 때입니다.',
+      '학사님 핸드폰이 사진 한 장 넘기다 잠시 영성체 묵상에 들어갑니다. 더 늦기 전에 구조가 필요합니다.',
+      '이대로 두면 성당 추억이 로딩바와 함께 늙어갑니다. 노학사 핸드폰 구하기, 지금 함께해 주세요.',
+      '학사님 폰에서 사진이 뜨는 사이, 우리는 묵주기도 한 단을 끝낼 수 있습니다. 이제는 속도도 함께 챙겨드려요.',
+      '성당 단체사진 1장 보려다 다음 주일이 되기 전에, 새 핸드폰으로 바꿔드립시다!',
+      '사진을 보자는 말에 학사님 폰이 먼저 침묵 피정에 들어갔습니다. 피정은 사람만 가는 걸로 해요.',
+      '학사님 폰의 로딩 화면을 보며 인내심은 충분히 길렀습니다. 이제는 기변의 은총을 나눌 차례입니다.',
+      '화면이 멈췄다고 우리의 사랑까지 멈출 수는 없습니다. 노학사 S26 프로젝트에 동참해 주세요.',
+      '새 폰 하나에 한 사람이 부담하기엔 크지만, 우리 모두가 함께하면 기적처럼 가벼워집니다.',
+      '청년회 단체사진에 제일 먼저 등장하는 건 학사님의 로딩바입니다. 로딩바 은퇴식을 열어주세요.',
+      '핸드폰에게도 안식이 필요합니다. 학사님의 오래된 폰에 명예로운 은퇴를 선물할 시간입니다.',
+      '오늘도 사진이 열리길 기다리는 학사님… “잠시만요”라는 말 대신 “짠!”을 드리고 싶습니다.',
+      '학사님의 추억은 고화질로, 기다림은 저화질로! 작은 참여 하나가 S26에 한 걸음 더 가깝게 합니다.'
+    ];
+
+    const $ = (id) => document.getElementById(id);
+    const currency = (n) => `${Math.ceil(n).toLocaleString('ko-KR')}원`;
+    const DEMO_KEY = 'sanarae-nohaksa-demo-v1';
+    const configured = CONFIG.supabaseUrl.startsWith('https://') && CONFIG.supabasePublishableKey.startsWith('sb_publishable_');
+    const founder = { id: 'founder', name: CONFIG.founderName, is_founder: true, user_id: null, created_at: '2026-11-05T00:00:00Z' };
+
+    let db = null;
+    let currentUser = null;
+    let participants = [];
+    let busy = false;
+    let toastTimer = null;
+
+    $('goalAmount').textContent = currency(CONFIG.goalWon);
+    document.title = `노학사 핸드폰 구하기 | sanarae`;
+
+    function pickRandomMessage() {
+      return PLEAS[Math.floor(Math.random() * PLEAS.length)];
+    }
+
+    function showRandomQuote() {
+      $('randomQuote').textContent = pickRandomMessage();
+      $('supportMessage').textContent = pickRandomMessage();
+    }
+
+    function notify(message) {
+      const wrap = $('toastWrap');
+      const toast = $('toast');
+      toast.textContent = message;
+      wrap.classList.add('show');
+      toast.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.remove('show');
+        wrap.classList.remove('show');
+      }, 3200);
+    }
+
+    function openModal(node) {
+      node.classList.add('open');
+      node.setAttribute('aria-hidden', 'false');
+    }
+    function closeModal(node) {
+      node.classList.remove('open');
+      node.setAttribute('aria-hidden', 'true');
+    }
+
+    function memberCount() {
+      return participants.length;
+    }
+
+    function calcShare(count) {
+      return count > 0 ? Math.ceil(CONFIG.goalWon / count) : CONFIG.goalWon;
+    }
+
+    function myMembership() {
+      return participants.find((p) => !p.is_founder && currentUser && p.user_id === currentUser.id) || null;
+    }
+
+    function formatDate(dateStr) {
+      if (!dateStr) return '';
+      const d = new Date(dateStr);
+      if (Number.isNaN(d.getTime())) return '';
+      return new Intl.DateTimeFormat('ko-KR', { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' }).format(d);
+    }
+
+    function renderMembers() {
+      const list = $('memberList');
+      list.innerHTML = '';
+      if (!participants.length) {
+        list.innerHTML = '<div class="empty">아직 참여자가 없습니다.</div>';
+        return;
+      }
+      participants.forEach((member, index) => {
+        const item = document.createElement('div');
+        item.className = 'member';
+        const badge = member.is_founder ? '👑' : String(index + 1);
+        const tagText = member.is_founder ? '주최' : (currentUser && member.user_id === currentUser.id ? '나' : '함께함');
+        item.innerHTML = `
+          <div class="avatar">${badge}</div>
+          <div class="member-body">
+            <div class="member-name">${escapeHtml(member.name)}</div>
+            <div class="member-meta">${member.is_founder ? '프로젝트 시작한 사람' : `${formatDate(member.created_at)} 참여`}</div>
+          </div>
+          <div class="tag">${tagText}</div>
+        `;
+        list.appendChild(item);
+      });
+    }
+
+    function render() {
+      const count = memberCount();
+      const share = calcShare(count);
+      const progress = Math.min(100, Math.round((count / 10) * 100)); // 10명 참여 달성 기준의 참여 지표
+      $('memberCount').textContent = `${count.toLocaleString('ko-KR')}명`;
+      $('shareAmount').textContent = currency(share);
+      $('progressText').textContent = `현재 ${count}명이 마음을 보탰습니다. (참여 지표: 10명 기준)`;
+      $('progressBar').style.width = `${progress}%`;
+
+      if (count <= 1) {
+        $('supportMessage').textContent = '한 분만 더 함께해 주시면 부담은 벌써 절반으로 줄어듭니다.';
+      } else {
+        $('supportMessage').textContent = `지금 함께하면 1인당 예상 부담은 ${currency(share)}입니다. 함께할수록 더 가벼워집니다.`;
+      }
+
+      const mine = myMembership();
+      $('myCard').classList.toggle('show', !!mine);
+      if (mine) {
+        $('myCardTitle').textContent = `${mine.name}님, 현재 참여 중입니다`;
+        $('myCardDesc').textContent = `지금 취소하시면 전체 인원은 ${count - 1}명, 1인당 예상 부담은 ${currency(calcShare(count - 1 || 1))}으로 바뀝니다.`;
+      }
+
+      renderMembers();
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+    }
+
+    function readDemoData() {
+      try {
+        const parsed = JSON.parse(localStorage.getItem(DEMO_KEY) || 'null');
+        if (!parsed || typeof parsed.name !== 'string' || !parsed.name.trim()) return null;
+        return { name: parsed.name.trim() };
+      } catch {
+        return null;
+      }
+    }
+
+    function refreshDemo() {
+      currentUser = { id: 'local-demo-user' };
+      const stored = readDemoData();
+      participants = [founder];
+      if (stored) {
+        participants.push({
+          id: 'demo-participant',
+          name: stored.name,
+          user_id: currentUser.id,
+          is_founder: false,
+          created_at: new Date().toISOString()
+        });
+      }
+      render();
+    }
+
+    async function ensureUser() {
+      if (currentUser) return currentUser;
+      const { data, error } = await db.auth.signInAnonymously();
+      if (error) throw error;
+      currentUser = data.user;
+      return currentUser;
+    }
+
+    async function loadParticipants() {
+      const { data, error } = await db.from('participants').select('id,name,user_id,is_founder,created_at').order('created_at', { ascending: true });
+      if (error) throw error;
+      participants = data || [];
+      if (!participants.length) participants = [founder];
+      render();
+    }
+
+    function setBusy(value) {
+      busy = value;
+      $('joinButton').disabled = value;
+      $('cancelButton').disabled = value;
+      $('confirmCancelButton').disabled = value;
+      $('joinButton').textContent = value ? '처리 중…' : '참여하기';
+    }
+
+    async function join(name) {
+      const cleaned = name.trim().replace(/\s+/g, ' ');
+      if (cleaned.length < 1 || cleaned.length > 20) {
+        notify('이름 또는 별명을 1~20자로 입력해 주세요.');
+        return;
+      }
+      if (busy) return;
+      setBusy(true);
+      try {
+        if (configured) {
+          const user = await ensureUser();
+          const { error } = await db.from('participants').insert({ name: cleaned, user_id: user.id });
+          if (error) {
+            if (error.code === '23505') throw new Error('이미 참여한 이름이거나 이미 참여 중인 브라우저입니다.');
+            throw error;
+          }
+          await loadParticipants();
+        } else {
+          localStorage.setItem(DEMO_KEY, JSON.stringify({ name: cleaned }));
+          refreshDemo();
+        }
+        closeModal($('joinModal'));
+        $('nameInput').value = '';
+        notify(`${cleaned}님, 함께해 주셔서 감사합니다! 🙌`);
+      } catch (err) {
+        notify(`참여하지 못했습니다: ${err.message || '잠시 후 다시 시도해 주세요.'}`);
+      } finally {
+        setBusy(false);
+        render();
+      }
+    }
+
+    async function cancelParticipation() {
+      const mine = myMembership();
+      if (!mine || busy) return;
+      setBusy(true);
+      try {
+        if (configured) {
+          const { error } = await db.from('participants').delete().eq('id', mine.id).eq('user_id', currentUser.id);
+          if (error) throw error;
+          await loadParticipants();
+        } else {
+          localStorage.removeItem(DEMO_KEY);
+          refreshDemo();
+        }
+        notify('참여가 취소되었습니다. 그래도 마음은 남아 있습니다 🙂');
+      } catch (err) {
+        notify(`취소하지 못했습니다: ${err.message || '잠시 후 다시 시도해 주세요.'}`);
+      } finally {
+        setBusy(false);
+        render();
+      }
+    }
+
+    function setupRandomButtons() {
+      document.querySelectorAll('.random-action').forEach((button) => {
+        button.addEventListener('click', () => {
+          const text = pickRandomMessage();
+          $('randomQuote').textContent = text;
+          notify(text);
+        });
+      });
+      $('changeMessageButton').addEventListener('click', () => {
+        const text = pickRandomMessage();
+        $('randomQuote').textContent = text;
+        $('supportMessage').textContent = text;
+        notify('센스 멘트를 바꿨습니다.');
+      });
+    }
+
+    function openJoin() {
+      openModal($('joinModal'));
+      setTimeout(() => $('nameInput').focus(), 30);
+    }
+
+    function bindEvents() {
+      $('openJoinButton').addEventListener('click', openJoin);
+      $('cardJoinButton').addEventListener('click', openJoin);
+      $('closeModalButton').addEventListener('click', () => closeModal($('joinModal')));
+      $('joinModal').addEventListener('click', (e) => { if (e.target === $('joinModal')) closeModal($('joinModal')); });
+      $('joinForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        join($('nameInput').value);
+      });
+
+      $('cancelButton').addEventListener('click', () => {
+        const count = memberCount();
+        $('cancelDescription').textContent = `지금 취소하시면 전체 참여 인원은 ${count}명에서 ${Math.max(1, count - 1)}명으로 줄고, 1인당 예상 부담은 ${currency(calcShare(count))}에서 ${currency(calcShare(Math.max(1, count - 1)))}으로 변경됩니다.`;
+        openModal($('cancelModal'));
+      });
+      $('keepButton').addEventListener('click', () => closeModal($('cancelModal')));
+      $('confirmCancelButton').addEventListener('click', async () => {
+        closeModal($('cancelModal'));
+        await cancelParticipation();
+      });
+      $('cancelModal').addEventListener('click', (e) => { if (e.target === $('cancelModal')) closeModal($('cancelModal')); });
+
+      const copyLink = async () => {
+        try {
+          await navigator.clipboard.writeText(location.href);
+          notify('링크가 복사되었습니다. 같이 마음 보탤 분께 보내 보세요! 🔗');
+        } catch {
+          notify('주소창의 링크를 직접 복사해 주세요.');
+        }
+      };
+      $('shareButton').addEventListener('click', copyLink);
+      $('shareTopButton').addEventListener('click', copyLink);
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          closeModal($('joinModal'));
+          closeModal($('cancelModal'));
+        }
+      });
+    }
+
+    async function start() {
+      showRandomQuote();
+      setupRandomButtons();
+      bindEvents();
+
+      if (!configured) {
+        $('storageMode').textContent = '데모 모드';
+        $('syncNotice').textContent = '현재는 데모 모드입니다. 이 브라우저에서만 저장됩니다. 여러 사람이 함께 보려면 Supabase를 연결해 주세요.';
+        refreshDemo();
+        return;
+      }
+
+      $('storageMode').textContent = '데이터 연결 중';
+      $('syncNotice').textContent = 'Supabase 데이터베이스 연결을 확인하는 중입니다.';
+
+      try {
+        const { createClient } = await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm');
+        db = createClient(CONFIG.supabaseUrl, CONFIG.supabasePublishableKey, {
+          auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: false }
+        });
+
+        const { data: { session } } = await db.auth.getSession();
+        currentUser = session?.user || null;
+        await loadParticipants();
+        $('storageMode').textContent = '공유 저장 연결됨';
+        $('syncNotice').textContent = '참여 내역은 Supabase에 저장됩니다. 다른 기기에서도 같은 참여 현황을 확인할 수 있습니다.';
+
+        db.channel('sanarae-nohaksa-participants')
+          .on('postgres_changes', { event: '*', schema: 'public', table: 'participants' }, async () => {
+            try { await loadParticipants(); } catch (e) { console.warn(e); }
+          })
+          .subscribe();
+
+        // Realtime 연결이 일시적으로 끊겨도 열린 화면의 참여 현황을 재확인합니다.
+        setInterval(async () => {
+          if (document.visibilityState === 'visible') {
+            try { await loadParticipants(); } catch (err) { console.warn('참여 현황 자동 갱신 실패:', err); }
+          }
+        }, 20000);
+        document.addEventListener('visibilitychange', () => {
+          if (document.visibilityState === 'visible') {
+            loadParticipants().catch(err => console.warn('참여 현황 재확인 실패:', err));
+          }
+        });
+      } catch (err) {
+        $('storageMode').textContent = '연결 오류';
+        $('syncNotice').textContent = 'Supabase 연결에 실패했습니다. 실제 저장이 불가능하므로 참여를 일시 중단합니다. URL, 공개 키, SQL, 익명 로그인을 확인해 주세요.';
+        notify(`데이터 연결 오류: ${err.message || '알 수 없는 오류'}`);
+        $('cardJoinButton').disabled = true;
+        $('openJoinButton').disabled = true;
+        $('joinButton').disabled = true;
+        $('joinButton').textContent = '연결 오류';
+        participants = [];
+        render();
+      }
+    }
+
+    start();
+  </script>
+</body>
+</html>
